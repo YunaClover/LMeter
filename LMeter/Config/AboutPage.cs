@@ -40,7 +40,7 @@ namespace LMeter.Config
                 // ImGui.SetCursorPosY(ImGui.GetCursorPosY() + headerSize.Y);
                 // DrawHelpers.DrawSpacing(1);
                 
-                ImGui.Text("Changelog");
+                ImGui.Text("更新日志");
                 Vector2 changeLogSize = new(size.X - padX * 2, size.Y - ImGui.GetCursorPosY() - padY - 30);
 
                 if (ImGui.BeginChild("##Changelog", changeLogSize, true))
@@ -57,7 +57,7 @@ namespace LMeter.Config
                 }
 
                 ImGui.SameLine();
-                if (ImGui.Button("Help", buttonSize))
+                if (ImGui.Button("帮助", buttonSize))
                 {
                     Utils.OpenUrl("https://github.com/lichie567/LMeter/wiki/FAQ");
                 }
