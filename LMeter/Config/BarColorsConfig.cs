@@ -96,50 +96,50 @@ namespace LMeter.Config
         {
             if (ImGui.BeginChild($"##{this.Name}", new Vector2(size.X, size.Y), border))
             {
-                DrawHelpers.DrawColorSelector("PLD", this.PLDColor);
-                DrawHelpers.DrawColorSelector("WAR", this.WARColor);
-                DrawHelpers.DrawColorSelector("DRK", this.DRKColor);
-                DrawHelpers.DrawColorSelector("GNB", this.GNBColor);
+                DrawHelpers.DrawColorSelector("骑士", this.PLDColor);
+                DrawHelpers.DrawColorSelector("战士", this.WARColor);
+                DrawHelpers.DrawColorSelector("暗黑骑士", this.DRKColor);
+                DrawHelpers.DrawColorSelector("绝枪战士", this.GNBColor);
 
                 ImGui.NewLine();
-                DrawHelpers.DrawColorSelector("SCH", this.SCHColor);
-                DrawHelpers.DrawColorSelector("WHM", this.WHMColor);
-                DrawHelpers.DrawColorSelector("AST", this.ASTColor);
-                DrawHelpers.DrawColorSelector("SGE", this.SGEColor);
+                DrawHelpers.DrawColorSelector("学者", this.SCHColor);
+                DrawHelpers.DrawColorSelector("白魔", this.WHMColor);
+                DrawHelpers.DrawColorSelector("占星", this.ASTColor);
+                DrawHelpers.DrawColorSelector("贤者", this.SGEColor);
 
                 ImGui.NewLine();
-                DrawHelpers.DrawColorSelector("MNK", this.MNKColor);
-                DrawHelpers.DrawColorSelector("NIN", this.NINColor);
-                DrawHelpers.DrawColorSelector("DRG", this.DRGColor);
-                DrawHelpers.DrawColorSelector("SAM", this.SAMColor);
-                DrawHelpers.DrawColorSelector("RPR", this.RPRColor);
-                DrawHelpers.DrawColorSelector("VPR", this.VPRColor);
+                DrawHelpers.DrawColorSelector("武僧", this.MNKColor);
+                DrawHelpers.DrawColorSelector("忍者", this.NINColor);
+                DrawHelpers.DrawColorSelector("龙骑", this.DRGColor);
+                DrawHelpers.DrawColorSelector("武士", this.SAMColor);
+                DrawHelpers.DrawColorSelector("镰刀", this.RPRColor);
+                DrawHelpers.DrawColorSelector("蝰蛇", this.VPRColor);
 
                 ImGui.NewLine();
-                DrawHelpers.DrawColorSelector("BRD", this.BRDColor);
-                DrawHelpers.DrawColorSelector("MCH", this.MCHColor);
-                DrawHelpers.DrawColorSelector("DNC", this.DNCColor);
+                DrawHelpers.DrawColorSelector("诗人", this.BRDColor);
+                DrawHelpers.DrawColorSelector("机工", this.MCHColor);
+                DrawHelpers.DrawColorSelector("舞者", this.DNCColor);
 
                 ImGui.NewLine();
-                DrawHelpers.DrawColorSelector("BLM", this.BLMColor);
-                DrawHelpers.DrawColorSelector("SMN", this.SMNColor);
-                DrawHelpers.DrawColorSelector("RDM", this.RDMColor);
-                DrawHelpers.DrawColorSelector("PCT", this.PCTColor);
-                DrawHelpers.DrawColorSelector("BLU", this.BLUColor);
+                DrawHelpers.DrawColorSelector("黑魔", this.BLMColor);
+                DrawHelpers.DrawColorSelector("召唤", this.SMNColor);
+                DrawHelpers.DrawColorSelector("赤魔", this.RDMColor);
+                DrawHelpers.DrawColorSelector("画家", this.PCTColor);
+                DrawHelpers.DrawColorSelector("青魔", this.BLUColor);
 
                 ImGui.NewLine();
-                DrawHelpers.DrawColorSelector("GLA", this.GLAColor);
-                DrawHelpers.DrawColorSelector("MRD", this.MRDColor);
-                DrawHelpers.DrawColorSelector("CNJ", this.CNJColor);
-                DrawHelpers.DrawColorSelector("PGL", this.PGLColor);
-                DrawHelpers.DrawColorSelector("ROG", this.ROGColor);
-                DrawHelpers.DrawColorSelector("LNC", this.LNCColor);
-                DrawHelpers.DrawColorSelector("ARC", this.ARCColor);
-                DrawHelpers.DrawColorSelector("THM", this.THMColor);
-                DrawHelpers.DrawColorSelector("ACN", this.ACNColor);
+                DrawHelpers.DrawColorSelector("剑术师", this.GLAColor);
+                DrawHelpers.DrawColorSelector("斧术师", this.MRDColor);
+                DrawHelpers.DrawColorSelector("幻术师", this.CNJColor);
+                DrawHelpers.DrawColorSelector("格斗家", this.PGLColor);
+                DrawHelpers.DrawColorSelector("双剑师", this.ROGColor);
+                DrawHelpers.DrawColorSelector("枪术师", this.LNCColor);
+                DrawHelpers.DrawColorSelector("弓箭手", this.ARCColor);
+                DrawHelpers.DrawColorSelector("咒术师", this.THMColor);
+                DrawHelpers.DrawColorSelector("秘术师", this.ACNColor);
 
                 ImGui.NewLine();
-                DrawHelpers.DrawColorSelector("Limit Break", this.UKNColor);
+                DrawHelpers.DrawColorSelector("极限技", this.UKNColor);
             }
 
             ImGui.EndChild();

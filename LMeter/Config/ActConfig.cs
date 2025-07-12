@@ -46,18 +46,18 @@ namespace LMeter.Config
             if (ImGui.BeginChild($"##{this.Name}", new Vector2(size.X, size.Y), border))
             {
                 int currentClientType = this.ClientType;
-                ImGui.Text("ACT Client Type:");
+                ImGui.Text("ACT客户端类别:");
                 ImGui.RadioButton("WebSocket", ref this.ClientType, 0);
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("Use this option if you are using the standard standalone Advanced Combat Tracker program.");
+                    ImGui.SetTooltip("如果您正在使用普通ACT程序，请使用此选项。");
                 }
 
                 ImGui.SameLine();
                 ImGui.RadioButton("IINACT IPC", ref this.ClientType, 1);
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("Use this option if you are using the IINACT dalamud plugin.");
+                    ImGui.SetTooltip("如果您正在使用 IINACT dalamud 插件，请使用此选项。");
                 }
 
                 if (currentClientType != this.ClientType)
@@ -66,17 +66,17 @@ namespace LMeter.Config
                 }
 
                 Vector2 buttonSize = new(40, 0);
-                ImGui.Text($"ACT Status: {Singletons.Get<LogClient>().Status}");
+                ImGui.Text($"ACT 状态: {Singletons.Get<LogClient>().Status}");
                 if (this.ClientType == 0)
                 {
-                    ImGui.InputTextWithHint("ACT Websocket Address", $"Default: '{_defaultSocketAddress}'", ref this.ActSocketAddress, 64);
+                    ImGui.InputTextWithHint("ACT Websocket 地址", $"Default: '{_defaultSocketAddress}'", ref this.ActSocketAddress, 64);
                 }
 
-                DrawHelpers.DrawButton(string.Empty, FontAwesomeIcon.Sync, () => Singletons.Get<LogClient>().Reset(), "Reconnect", buttonSize);
+                DrawHelpers.DrawButton(string.Empty, FontAwesomeIcon.Sync, () => Singletons.Get<LogClient>().Reset(), "重新连接", buttonSize);
 
                 ImGui.SameLine();
                 ImGui.SetCursorPosY(ImGui.GetCursorPosY() - 1f);
-                ImGui.Text("Retry ACT Connection");
+                ImGui.Text("刷新ACT连接");
 
                 if (this.UseFFLogs)
                 {
@@ -86,27 +86,27 @@ namespace LMeter.Config
 
                 ImGui.NewLine();
                 ImGui.PushItemWidth(30);
-                ImGui.InputInt("Number of Encounters to save", ref this.EncounterHistorySize, 0, 0);
+                ImGui.InputInt("保存战斗记录数", ref this.EncounterHistorySize, 0, 0);
                 ImGui.PopItemWidth();
 
                 ImGui.NewLine();
-                ImGui.Checkbox("Automatically attempt to reconnect if connection fails", ref this.AutoReconnect);
+                ImGui.Checkbox("如果连接失败则自动尝试重新连接", ref this.AutoReconnect);
                 if (this.AutoReconnect)
                 {
                     DrawHelpers.DrawNestIndicator(1);
                     ImGui.PushItemWidth(30);
-                    ImGui.InputInt("Seconds between reconnect attempts", ref this.ReconnectDelay, 0, 0);
+                    ImGui.InputInt("秒后重新尝试连接", ref this.ReconnectDelay, 0, 0);
                     ImGui.PopItemWidth();
                 }
 
 
                 ImGui.NewLine();
-                ImGui.Checkbox("Clear ACT when clearing LMeter", ref this.ClearAct);
-                ImGui.Checkbox("Force ACT to end encounter after combat", ref this.AutoEnd);
+                ImGui.Checkbox("清理LMeter时也同时清理ACT数据", ref this.ClearAct);
+                ImGui.Checkbox("强制 ACT 在战斗后结束战斗", ref this.AutoEnd);
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("It is recommended to disable ACT Command Sounds if you use this feature.\n" +
-                                     "The option can be found in ACT under Options -> Sound Settings.");
+                    ImGui.SetTooltip("如果您使用此功能，建议禁用 ACT 命令提示音。\n" +
+                                     "该选项可以在 ACT 的“选项”->“声音设置”下找到。");
                 }
 
                 if (this.AutoEnd)
@@ -121,12 +121,12 @@ namespace LMeter.Config
                 DrawHelpers.DrawButton(string.Empty, FontAwesomeIcon.Stop, () => Singletons.Get<LogClient>().EndEncounter(), null, buttonSize);
                 ImGui.SameLine();
                 ImGui.SetCursorPosY(ImGui.GetCursorPosY() - 1f);
-                ImGui.Text("Force End Combat");
+                ImGui.Text("强制结束战斗记录");
 
                 DrawHelpers.DrawButton(string.Empty, FontAwesomeIcon.Trash, () => Singletons.Get<PluginManager>().Clear(), null, buttonSize);
                 ImGui.SameLine();
                 ImGui.SetCursorPosY(ImGui.GetCursorPosY() - 1f);
-                ImGui.Text("Clear LMeter");
+                ImGui.Text("清除LMeter数据");
             }
 
             ImGui.EndChild();

@@ -104,21 +104,21 @@ namespace LMeter.Config
         {
             if (ImGui.BeginChild($"##{this.Name}", new Vector2(size.X, size.Y), border))
             {
-                ImGui.Text("Bar Height Type");
-                ImGui.RadioButton("Constant Bar Number", ref this.BarHeightType, 0);
+                ImGui.Text("数据条高度种类");
+                ImGui.RadioButton("恒定数据条数", ref this.BarHeightType, 0);
                 ImGui.SameLine();
-                ImGui.RadioButton("Constant Bar Height", ref this.BarHeightType, 1);
+                ImGui.RadioButton("恒定数据条形高度", ref this.BarHeightType, 1);
 
                 if (this.BarHeightType == 0)
                 {
-                    ImGui.DragInt("Num Bars to Display", ref this.BarCount, 1, 1, 48);
+                    ImGui.DragInt("显示的数据条数", ref this.BarCount, 1, 1, 48);
                 }
                 else if (this.BarHeightType == 1)
                 {
-                    ImGui.DragFloat("Bar Height", ref this.BarHeight, .1f, 1, 100);
+                    ImGui.DragFloat("条形高度", ref this.BarHeight, .1f, 1, 100);
                 }
 
-                ImGui.DragInt("Bar Gap Size", ref this.BarGaps, 1, 0, 20);
+                ImGui.DragInt("数据条间隙尺寸", ref this.BarGaps, 1, 0, 20);
 
                 ImGui.NewLine();
                 ImGui.DragFloat("Bar Fill Height (% of Bar Height)", ref this.BarFillHeight, .1f, 0, 1f);

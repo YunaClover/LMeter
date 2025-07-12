@@ -636,7 +636,7 @@ namespace LMeter.Meter
                     ImGui.SetKeyboardFocusHere(0);
                 }
 
-                if (ImGui.Selectable("Current Data"))
+                if (ImGui.Selectable("当前数据"))
                 {
                     selected = true;
                 }
@@ -657,13 +657,13 @@ namespace LMeter.Meter
                 }
 
                 ImGui.Separator();
-                if (ImGui.Selectable("Clear Data"))
+                if (ImGui.Selectable("清除数据"))
                 {
                     Singletons.Get<PluginManager>().Clear();
                     selected = true;
                 }
 
-                if (ImGui.Selectable("Configure"))
+                if (ImGui.Selectable("配置"))
                 {
                     Singletons.Get<PluginManager>().ConfigureMeter(this);
                     selected = true;
