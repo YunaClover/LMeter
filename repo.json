@@ -2,7 +2,7 @@
     {
         "Author": "Lichie",
         "Name": "LMeter",
-        "Description": "Plugin to display ACT combat log data.",
+        "Description": "FF14伤害输出显示",
         "InternalName": "LMeter",
         "AssemblyVersion": "0.4.2.2",
         "TestingAssemblyVersion": "0.4.2.2",
