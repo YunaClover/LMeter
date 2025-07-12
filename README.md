@@ -9,4 +9,4 @@ LMeter is a Dalamud plugin for displaying your ACT combat log data. The purpose 
 
 LMeter is not available in the standard Dalamud plugin repository and must be installed from my third party repository.
 
-Here is the URL for my plugin repository: `https://raw.githubusercontent.com/lichie567/LMeter/main/repo.json`
+Here is the URL for my plugin repository: `https://raw.githubusercontent.com/YunaClover/LMeter/refs/heads/main/repo.json`
