@@ -1,12 +1,10 @@
-# LMeter
+# LMeterCN
 
 ![build status](https://github.com/lichie567/LMeter/actions/workflows/build-debug.yml/badge.svg?branch=main)
 ![release status](https://github.com/lichie567/LMeter/actions/workflows/release.yml/badge.svg)
 
-LMeter is a Dalamud plugin for displaying your ACT combat log data. The purpose of this plugin is to provide a highly customizable dps/hps meter without having to rely on clunky web-based overlays.
+LMeterCN 是一款 Dalamud 插件，用于显示你的 ACT 战斗日志数据。该插件旨在提供高度可定制的 DPS/HPS 计量器，无需依赖笨重的网页界面。
 
-## How to Install
+## 如何安装
 
-LMeter is not available in the standard Dalamud plugin repository and must be installed from my third party repository.
-
-Here is the URL for my plugin repository: `https://raw.githubusercontent.com/lichie567/LMeter/main/repo.json`
+第三方库链接：https://raw.githubusercontent.com/YunaClover/LMeterCN/refs/heads/main/repo.json
