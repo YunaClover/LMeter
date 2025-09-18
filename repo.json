@@ -2,11 +2,11 @@
   {
     "Author": "Lichie",
     "Name": "LMeter",
-    "Description": "Plugin to display ACT combat log data.",
+    "Description": "FF14 ACT伤害显示插件",
     "InternalName": "LMeter",
     "AssemblyVersion": "0.4.2.3",
     "TestingAssemblyVersion": "0.4.2.3",
-    "RepoUrl": "https://github.com/lichie567/LMeter",
+    "RepoUrl": "https://github.com/YunaClover/LMeterCN",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 13,
     "IsHide": "False",
@@ -14,9 +14,9 @@
     "DownloadCount": 0,
     "LastUpdate": 0,
     "LoadPriority": 69420,
-    "DownloadLinkInstall": "https://github.com/lichie567/LMeter/releases/download/0.4.2.3/LMeter.zip",
-    "DownloadLinkTesting": "https://github.com/lichie567/LMeter/releases/download/0.4.2.3/LMeter.zip",
-    "DownloadLinkUpdate": "https://github.com/lichie567/LMeter/releases/download/0.4.2.3/LMeter.zip",
-    "IconUrl": "https://raw.githubusercontent.com/lichie567/LMeter/main/LMeter/Media/Images/icon.png"
+    "DownloadLinkInstall": "https://github.com/YunaClover/LMeterCN/releases/download/1.0/latest.zip",
+    "DownloadLinkTesting": "https://github.com/YunaClover/LMeterCN/releases/download/1.0/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/YunaClover/LMeterCN/releases/download/1.0/latest.zip",
+    "IconUrl": "https://github.com/YunaClover/LMeterCN/blob/main/LMeter/Media/Images/icon.png"
   }
 ]
