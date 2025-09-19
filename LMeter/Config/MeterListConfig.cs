@@ -24,7 +24,7 @@ namespace LMeter.Config
         [JsonIgnore]
         public bool Active { get; set; }
 
-        public string Name => "Profiles";
+        public string Name => "配置文件";
 
         public List<MeterWindow> Meters { get; set; }
 
@@ -80,12 +80,12 @@ namespace LMeter.Config
             if (ImGui.BeginChild("##Buttons", new Vector2(size.X, MenuBarHeight), true))
             {
                 ImGui.PushItemWidth(textInputWidth);
-                ImGui.InputTextWithHint("##Input", "Profile Name/Import String", ref _input, 10000);
+                ImGui.InputTextWithHint("##Input", "配置名称/导入配置字符串", ref _input, 10000);
                 ImGui.PopItemWidth();
 
                 ImGui.PushItemWidth(meterTypeWidth);
                 ImGui.SameLine();
-                ImGui.Combo("", ref Unsafe.As<MeterDataType, int>(ref _meterDataType), ["Damage", "Healing"], 2);
+                ImGui.Combo("", ref Unsafe.As<MeterDataType, int>(ref _meterDataType), ["伤害", "治疗"], 2);
                 ImGui.PopItemWidth();
 
                 ImGui.SameLine();
@@ -93,7 +93,7 @@ namespace LMeter.Config
                     string.Empty,
                     FontAwesomeIcon.Plus,
                     () => CreateMeter(_input, _meterDataType),
-                    "Create new Meter",
+                    "新建统计窗口",
                     buttonSize
                 );
 
@@ -102,7 +102,7 @@ namespace LMeter.Config
                     string.Empty,
                     FontAwesomeIcon.Download,
                     () => ImportMeter(_input),
-                    "Import new Meter",
+                    "从字符串导入统计窗口",
                     buttonSize
                 );
                 ImGui.PopItemWidth();
@@ -126,9 +126,9 @@ namespace LMeter.Config
                 Vector2 buttonsize = new(30, 0);
                 float actionsWidth = buttonsize.X * 3 + padX * 2;
 
-                ImGui.TableSetupColumn("Enabled", ImGuiTableColumnFlags.WidthFixed, 46, 0);
-                ImGui.TableSetupColumn("Profile Name", ImGuiTableColumnFlags.WidthStretch, 0, 1);
-                ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthFixed, actionsWidth, 2);
+                ImGui.TableSetupColumn("启用", ImGuiTableColumnFlags.WidthFixed, 46, 0);
+                ImGui.TableSetupColumn("配置名称", ImGuiTableColumnFlags.WidthStretch, 0, 1);
+                ImGui.TableSetupColumn("操作", ImGuiTableColumnFlags.WidthFixed, actionsWidth, 2);
 
                 ImGui.TableSetupScrollFreeze(0, 1);
                 ImGui.TableHeadersRow();
@@ -167,7 +167,7 @@ namespace LMeter.Config
                             string.Empty,
                             FontAwesomeIcon.Pen,
                             () => EditMeter(meter),
-                            "Edit",
+                            "编辑",
                             buttonsize
                         );
 
@@ -176,7 +176,7 @@ namespace LMeter.Config
                             string.Empty,
                             FontAwesomeIcon.Upload,
                             () => ExportMeter(meter),
-                            "Export",
+                            "导出",
                             buttonsize
                         );
 
@@ -185,7 +185,7 @@ namespace LMeter.Config
                             string.Empty,
                             FontAwesomeIcon.Trash,
                             () => DeleteMeter(meter),
-                            "Delete",
+                            "删除",
                             buttonsize
                         );
                     }

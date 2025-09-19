@@ -31,7 +31,7 @@ namespace LMeter.Config
         [JsonIgnore]
         public bool Active { get; set; }
 
-        public string Name => "Visibility";
+        public string Name => "可见性";
 
         public List<VisibilityCondition> VisibilityConditions = [];
         public bool Initialized = false;
@@ -91,15 +91,15 @@ namespace LMeter.Config
             }
 
             float posY = ImGui.GetCursorPosY();
-            ImGui.Checkbox("Always Hide", ref this.AlwaysHide);
-            ImGui.Checkbox("Hide When Covered by Game UI Elements", ref this.ShouldClip);
-            ImGui.Checkbox("Always Show When Hovered by Mouse", ref this.ShowOnMouseover);
-            ImGui.Checkbox("Always Hide When Not Connected to ACT", ref this.HideIfNotConnected);
+            ImGui.Checkbox("始终隐藏", ref this.AlwaysHide);
+            ImGui.Checkbox("被游戏界面遮挡时隐藏", ref this.ShouldClip);
+            ImGui.Checkbox("鼠标悬停时始终显示", ref this.ShowOnMouseover);
+            ImGui.Checkbox("未连接ACT时隐藏", ref this.HideIfNotConnected);
             size = new(size.X, size.Y - (ImGui.GetCursorPosY() - posY));
 
             if (ImGui.BeginChild("##VisibilityOptionConfig", new Vector2(size.X, size.Y), border))
             {
-                ImGui.Text("Visibility Conditions");
+                ImGui.Text("可见性条件");
 
                 ImGuiTableFlags tableFlags =
                     ImGuiTableFlags.RowBg
@@ -142,7 +142,7 @@ namespace LMeter.Config
                         string.Empty,
                         FontAwesomeIcon.Plus,
                         () => this.AddOption(),
-                        "New Condition",
+                        "新建条件",
                         buttonSize
                     );
                     ImGui.SameLine();
@@ -150,7 +150,7 @@ namespace LMeter.Config
                         string.Empty,
                         FontAwesomeIcon.Download,
                         () => this.ImportOption(),
-                        "Import Condition",
+                        "导入条件",
                         buttonSize
                     );
 
@@ -249,7 +249,7 @@ namespace LMeter.Config
                     string.Empty,
                     FontAwesomeIcon.Pen,
                     () => this.SelectOption(i),
-                    "Edit Condition",
+                    "编辑条件",
                     buttonSize
                 );
 
@@ -260,7 +260,7 @@ namespace LMeter.Config
                         string.Empty,
                         FontAwesomeIcon.ArrowUp,
                         () => this.Swap(i, i - 1),
-                        "Move Up",
+                        "上移",
                         buttonSize
                     );
 
@@ -269,7 +269,7 @@ namespace LMeter.Config
                         string.Empty,
                         FontAwesomeIcon.ArrowDown,
                         () => this.Swap(i, i + 1),
-                        "Move Down",
+                        "下移",
                         buttonSize
                     );
                 }
@@ -279,7 +279,7 @@ namespace LMeter.Config
                     string.Empty,
                     FontAwesomeIcon.Upload,
                     () => this.ExportOption(i),
-                    "Export Condition",
+                    "导出条件",
                     buttonSize
                 );
                 if (this.VisibilityConditions.Count > 1)
@@ -289,7 +289,7 @@ namespace LMeter.Config
                         string.Empty,
                         FontAwesomeIcon.Trash,
                         () => this.RemoveOption(i),
-                        "Remove Condition",
+                        "删除条件",
                         buttonSize
                     );
                 }
@@ -379,45 +379,45 @@ namespace LMeter.Config
         public void DrawConfig(Vector2 size, float padX, float padY)
         {
             ImGui.RadioButton(
-                "Always True",
+                "始终为真",
                 ref Unsafe.As<VisibilityConditionType, int>(ref this.ConditionType),
                 (int)VisibilityConditionType.AlwaysTrue
             );
             ImGui.RadioButton(
-                "In Combat",
+                "战斗中",
                 ref Unsafe.As<VisibilityConditionType, int>(ref this.ConditionType),
                 (int)VisibilityConditionType.InCombat
             );
             ImGui.RadioButton(
-                "In Duty",
+                "副本中",
                 ref Unsafe.As<VisibilityConditionType, int>(ref this.ConditionType),
                 (int)VisibilityConditionType.InDuty
             );
             ImGui.RadioButton(
-                "Performing",
+                "过场动画中",
                 ref Unsafe.As<VisibilityConditionType, int>(ref this.ConditionType),
                 (int)VisibilityConditionType.Performing
             );
 
             ImGui.RadioButton(
-                "In Zone",
+                "指定区域",
                 ref Unsafe.As<VisibilityConditionType, int>(ref this.ConditionType),
                 (int)VisibilityConditionType.Zone
             );
             if (this.ConditionType == VisibilityConditionType.Zone)
             {
                 DrawHelpers.DrawNestIndicator(1);
-                ImGui.RadioButton("Gold Saucer", ref Unsafe.As<ZoneType, int>(ref this.Zone), (int)ZoneType.GoldSaucer);
+                ImGui.RadioButton("金蝶", ref Unsafe.As<ZoneType, int>(ref this.Zone), (int)ZoneType.GoldSaucer);
                 DrawHelpers.DrawNestIndicator(1);
                 ImGui.RadioButton(
-                    "Player House",
+                    "玩家住宅",
                     ref Unsafe.As<ZoneType, int>(ref this.Zone),
                     (int)ZoneType.PlayerHouse
                 );
             }
 
             ImGui.RadioButton(
-                "Job",
+                "职业",
                 ref Unsafe.As<VisibilityConditionType, int>(ref this.ConditionType),
                 (int)VisibilityConditionType.Job
             );
@@ -426,7 +426,7 @@ namespace LMeter.Config
                 DrawHelpers.DrawNestIndicator(1);
                 string[] jobTypeOptions = Enum.GetNames<JobType>();
                 ImGui.Combo(
-                    "Job Select",
+                    "职业选择",
                     ref Unsafe.As<JobType, int>(ref this.ShowForJobTypes),
                     jobTypeOptions,
                     jobTypeOptions.Length
@@ -442,8 +442,8 @@ namespace LMeter.Config
                     DrawHelpers.DrawNestIndicator(1);
                     if (
                         ImGui.InputTextWithHint(
-                            "Custom Job List",
-                            "Comma Separated List (ex: WAR, SAM, BLM)",
+                            "自定义职业列表",
+                            "逗号分隔 (如: WAR, SAM, BLM)",
                             ref _customJobInput,
                             100,
                             ImGuiInputTextFlags.EnterReturnsTrue
