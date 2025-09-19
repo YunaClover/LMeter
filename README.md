@@ -7,4 +7,4 @@ LMeterCN 是一款 Dalamud 插件，用于显示你的 ACT 战斗日志数据。
 
 ## 如何安装
 
-第三方库链接：https://raw.githubusercontent.com/YunaClover/LMeterCN/refs/heads/main/repo.json](https://github.com/YunaClover/LMeter/blob/main/repo.json
+第三方库链接:https://github.com/YunaClover/LMeter/blob/main/repo.json
