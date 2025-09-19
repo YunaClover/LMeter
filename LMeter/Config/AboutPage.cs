@@ -10,7 +10,7 @@ namespace LMeter.Config
         [JsonIgnore]
         public bool Active { get; set; }
 
-        public string Name => "Changelog";
+        public string Name => "更新日志";
 
         public IConfigPage GetDefault() => new AboutPage();
 
@@ -40,7 +40,7 @@ namespace LMeter.Config
                 // ImGui.SetCursorPosY(ImGui.GetCursorPosY() + headerSize.Y);
                 // DrawHelpers.DrawSpacing(1);
 
-                ImGui.Text("Changelog");
+                ImGui.Text("更新日志");
                 Vector2 changeLogSize = new(size.X - padX * 2, size.Y - ImGui.GetCursorPosY() - padY - 30);
 
                 if (ImGui.BeginChild("##Changelog", changeLogSize, true))

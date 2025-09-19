@@ -17,7 +17,7 @@ namespace LMeter.Config
         public static readonly string[] OperatorOptions = ["AND", "OR", "XOR"];
 
         [JsonIgnore]
-        public static readonly string[] ResultOptions = ["Show", "Hide"];
+        public static readonly string[] ResultOptions = ["显示", "隐藏"];
 
         [JsonIgnore]
         private int _swapX = -1;
@@ -121,10 +121,10 @@ namespace LMeter.Config
                     Vector2 buttonSize = new(30, 0);
                     int buttonCount = this.VisibilityConditions.Count > 1 ? 5 : 3;
                     float actionsWidth = buttonSize.X * buttonCount + padX * (buttonCount - 1);
-                    ImGui.TableSetupColumn("Operator", ImGuiTableColumnFlags.WidthFixed, 60, 0);
-                    ImGui.TableSetupColumn("Invert", ImGuiTableColumnFlags.WidthFixed, 35, 1);
-                    ImGui.TableSetupColumn("Condition Type", ImGuiTableColumnFlags.WidthStretch, 0, 2);
-                    ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthFixed, actionsWidth, 3);
+                    ImGui.TableSetupColumn("运算符", ImGuiTableColumnFlags.WidthFixed, 60, 0);
+                    ImGui.TableSetupColumn("反转", ImGuiTableColumnFlags.WidthFixed, 35, 1);
+                    ImGui.TableSetupColumn("条件类型", ImGuiTableColumnFlags.WidthStretch, 0, 2);
+                    ImGui.TableSetupColumn("操作", ImGuiTableColumnFlags.WidthFixed, actionsWidth, 3);
                     ImGui.TableSetupScrollFreeze(0, 1);
                     ImGui.TableHeadersRow();
 
@@ -172,14 +172,14 @@ namespace LMeter.Config
                     }
                 }
 
-                ImGui.Text("Action if result is true:");
+                ImGui.Text("结果为真时:");
                 ImGui.SameLine();
                 ImGui.PushItemWidth(100);
                 ImGui.SetCursorPos(ImGui.GetCursorPos() + new Vector2(0f, -2f));
                 ImGui.Combo("##ResultCombo", ref this.ResultOption, ResultOptions, ResultOptions.Length);
                 ImGui.PopItemWidth();
 
-                ImGui.Text($"Edit Condition {_selectedIndex + 1}");
+                ImGui.Text($"编辑条件 {_selectedIndex + 1}");
                 if (
                     ImGui.BeginChild(
                         "##ConditionEdit",

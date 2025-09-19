@@ -9,9 +9,9 @@ namespace LMeter.Config
     {
         [JsonIgnore]
         public bool Active { get; set; }
-        public string Name => "Bars";
+        public string Name => "伤害数据";
 
-        private static readonly string[] _jobIconStyleOptions = ["Style 1", "Style 2"];
+        private static readonly string[] _jobIconStyleOptions = ["类型1", "类型2"];
 
         public int BarHeightType = 0;
         public int BarCount = 8;
@@ -104,119 +104,119 @@ namespace LMeter.Config
         {
             if (ImGui.BeginChild($"##{this.Name}", new Vector2(size.X, size.Y), border))
             {
-                ImGui.Text("Bar Height Type");
-                ImGui.RadioButton("Constant Bar Number", ref this.BarHeightType, 0);
+                ImGui.Text("伤害数据类型");
+                ImGui.RadioButton("固定条数", ref this.BarHeightType, 0);
                 ImGui.SameLine();
-                ImGui.RadioButton("Constant Bar Height", ref this.BarHeightType, 1);
+                ImGui.RadioButton("固定高度", ref this.BarHeightType, 1);
 
                 if (this.BarHeightType == 0)
                 {
-                    ImGui.DragInt("Num Bars to Display", ref this.BarCount, 1, 1, 48);
+                    ImGui.DragInt("显示条数", ref this.BarCount, 1, 1, 48);
                 }
                 else if (this.BarHeightType == 1)
                 {
-                    ImGui.DragFloat("Bar Height", ref this.BarHeight, .1f, 1, 100);
+                    ImGui.DragFloat("条形高度", ref this.BarHeight, .1f, 1, 100);
                 }
 
-                ImGui.DragInt("Bar Gap Size", ref this.BarGaps, 1, 0, 20);
+                ImGui.DragInt("条形间距", ref this.BarGaps, 1, 0, 20);
 
                 ImGui.NewLine();
-                ImGui.DragFloat("Bar Fill Height (% of Bar Height)", ref this.BarFillHeight, .1f, 0, 1f);
-                ImGui.Combo("Bar Fill Direction", ref this.BarFillDirection, ["Up", "Down"], 2);
-                DrawHelpers.DrawColorSelector("Bar Background Color", this.BarBackgroundColor);
+                ImGui.DragFloat("填充高度（占条形高度百分比）", ref this.BarFillHeight, .1f, 0, 1f);
+                ImGui.Combo("填充方向", ref this.BarFillDirection, ["向上", "向下"], 2);
+                DrawHelpers.DrawColorSelector("数据条背景色", this.BarBackgroundColor);
 
                 ImGui.NewLine();
-                ImGui.Checkbox("Show Job Icon", ref this.ShowJobIcon);
+                ImGui.Checkbox("显示职业图标", ref this.ShowJobIcon);
                 if (this.ShowJobIcon)
                 {
                     DrawHelpers.DrawNestIndicator(1);
                     ImGui.SameLine();
-                    ImGui.RadioButton("Automatic Size", ref this.JobIconSizeType, 0);
+                    ImGui.RadioButton("自动大小", ref this.JobIconSizeType, 0);
                     ImGui.SameLine();
-                    ImGui.RadioButton("Manual Size", ref this.JobIconSizeType, 1);
+                    ImGui.RadioButton("手动大小", ref this.JobIconSizeType, 1);
 
                     if (this.JobIconSizeType == 1)
                     {
                         DrawHelpers.DrawNestIndicator(1);
-                        ImGui.DragFloat2("Size##JobIconSize", ref this.JobIconSize);
+                        ImGui.DragFloat2("大小##JobIconSize", ref this.JobIconSize);
                     }
 
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.DragFloat2("Job Icon Offset", ref this.JobIconOffset);
+                    ImGui.DragFloat2("职业图标偏移", ref this.JobIconOffset);
 
                     DrawHelpers.DrawNestIndicator(1);
                     ImGui.Combo(
-                        "Job Icon Style",
+                        "职业图标样式",
                         ref this.JobIconStyle,
                         _jobIconStyleOptions,
                         _jobIconStyleOptions.Length
                     );
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawColorSelector("Background Color##JobIcon", this.JobIconBackgroundColor);
+                    DrawHelpers.DrawColorSelector("背景颜色##JobIcon", this.JobIconBackgroundColor);
                 }
 
                 ImGui.NewLine();
-                ImGui.Checkbox("Show Column Header Bar", ref this.ShowColumnHeader);
+                ImGui.Checkbox("显示表头栏", ref this.ShowColumnHeader);
                 if (this.ShowColumnHeader)
                 {
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.DragFloat("Column Header Height", ref this.ColumnHeaderHeight);
+                    ImGui.DragFloat("表头高度", ref this.ColumnHeaderHeight);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.DragFloat2("Text Offset", ref this.ColumnHeaderOffset);
+                    ImGui.DragFloat2("文字偏移", ref this.ColumnHeaderOffset);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawColorSelector("Background Color", this.ColumnHeaderColor);
+                    DrawHelpers.DrawColorSelector("表头背景色", this.ColumnHeaderColor);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawColorSelector("Text Color", this.ColumnHeaderTextColor);
+                    DrawHelpers.DrawColorSelector("表头文字颜色", this.ColumnHeaderTextColor);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.Checkbox("Use Font from Column", ref this.UseColumnFont);
+                    ImGui.Checkbox("使用表头字体", ref this.UseColumnFont);
                     if (!this.UseColumnFont)
                     {
                         DrawHelpers.DrawNestIndicator(2);
                         DrawHelpers.DrawFontSelector(
-                            "Font##Column",
+                            "字体##Column",
                             ref this.ColumnHeaderFontKey,
                             ref this.ColumnHeaderFontId
                         );
                     }
 
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.Checkbox("Show Outline", ref this.ColumnHeaderShowOutline);
+                    ImGui.Checkbox("显示描边", ref this.ColumnHeaderShowOutline);
                     if (this.ColumnHeaderShowOutline)
                     {
                         DrawHelpers.DrawNestIndicator(2);
-                        DrawHelpers.DrawColorSelector("Column Header Color", this.ColumnHeaderOutlineColor);
+                        DrawHelpers.DrawColorSelector("表头描边颜色", this.ColumnHeaderOutlineColor);
                     }
                 }
 
                 ImGui.NewLine();
-                ImGui.Checkbox("Use Job Colors for Bars", ref this.UseJobColor);
+                ImGui.Checkbox("伤害数据使用职业颜色", ref this.UseJobColor);
                 if (!this.UseJobColor)
                 {
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawColorSelector("Bar Color", this.BarColor);
+                    DrawHelpers.DrawColorSelector("条形颜色", this.BarColor);
                 }
 
-                ImGui.Checkbox("Use Custom Color for your own bar", ref this.UseCustomColorForSelf);
+                ImGui.Checkbox("个人数据使用自定义颜色", ref this.UseCustomColorForSelf);
                 if (this.UseCustomColorForSelf)
                 {
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawColorSelector("Self Color", this.CustomColorForSelf);
+                    DrawHelpers.DrawColorSelector("颜色", this.CustomColorForSelf);
                 }
 
-                ImGui.Checkbox("Use your name instead of 'YOU'", ref this.UseCharacterName);
+                ImGui.Checkbox("使用角色名替代 'YOU'", ref this.UseCharacterName);
                 if (this.BarHeightType == 0)
                 {
-                    ImGui.Checkbox("Always show your own bar", ref this.AlwaysShowSelf);
+                    ImGui.Checkbox("始终显示自己伤害数据", ref this.AlwaysShowSelf);
                 }
 
                 ImGui.NewLine();
-                DrawHelpers.DrawRoundingOptions("Top Bar Rounded Corners", 0, this.TopBarRounding);
-                DrawHelpers.DrawRoundingOptions("Middle Bar Rounded Corners", 0, this.MiddleBarRounding);
-                DrawHelpers.DrawRoundingOptions("Bottom Bar Rounded Corners", 0, this.BottomBarRounding);
+                DrawHelpers.DrawRoundingOptions("顶部圆角", 0, this.TopBarRounding);
+                DrawHelpers.DrawRoundingOptions("中部圆角", 0, this.MiddleBarRounding);
+                DrawHelpers.DrawRoundingOptions("底部圆角", 0, this.BottomBarRounding);
             }
 
             ImGui.EndChild();
