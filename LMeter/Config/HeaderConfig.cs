@@ -10,7 +10,7 @@ namespace LMeter.Config
         [JsonIgnore]
         public bool Active { get; set; }
 
-        public string Name => "Header/Footer";
+        public string Name => "标题栏/底栏";
 
         public bool ShowHeader = true;
         public int HeaderHeight = 25;
@@ -84,47 +84,47 @@ namespace LMeter.Config
                 if (this.ShowHeader)
                 {
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.DragInt("Height##Header", ref this.HeaderHeight, 1, 0, 100);
+                    ImGui.DragInt("高度##Header", ref this.HeaderHeight, 1, 0, 100);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawColorSelector("Background Color##Header", this.BackgroundColor);
+                    DrawHelpers.DrawColorSelector("背景颜色##Header", this.BackgroundColor);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawRoundingOptions("Use Rounded Corners##Header", 1, this.Rounding);
+                    DrawHelpers.DrawRoundingOptions("使用圆角##Header", 1, this.Rounding);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.Checkbox("Show LMeter Version when Cleared", ref this.ShowVersion);
+                    ImGui.Checkbox("清楚记录时显示LMeter版本号", ref this.ShowVersion);
                     if (this.ShowVersion)
                     {
                         DrawHelpers.DrawNestIndicator(2);
-                        ImGui.DragFloat2("Offset##Version", ref this.VersionOffset);
+                        ImGui.DragFloat2("位置偏移##Version", ref this.VersionOffset);
 
                         DrawHelpers.DrawNestIndicator(2);
-                        DrawHelpers.DrawFontSelector("Font##Version", ref this.VersionFontKey, ref this.VersionFontId);
+                        DrawHelpers.DrawFontSelector("字体##Version", ref this.VersionFontKey, ref this.VersionFontId);
 
                         DrawHelpers.DrawNestIndicator(2);
-                        DrawHelpers.DrawColorSelector("Text Color##Version", this.VersionColor);
+                        DrawHelpers.DrawColorSelector("字体颜色##Version", this.VersionColor);
 
                         DrawHelpers.DrawNestIndicator(2);
-                        ImGui.Checkbox("Show Outline##Version", ref this.VersionShowOutline);
+                        ImGui.Checkbox("显示字体描边##Version", ref this.VersionShowOutline);
                         if (this.VersionShowOutline)
                         {
                             DrawHelpers.DrawNestIndicator(3);
-                            DrawHelpers.DrawColorSelector("Outline Color##Version", this.VersionOutlineColor);
+                            DrawHelpers.DrawColorSelector("字体描边颜色##Version", this.VersionOutlineColor);
                         }
                     }
 
                     ImGui.NewLine();
                 }
 
-                ImGui.Checkbox("Show Footer", ref this.ShowFooter);
+                ImGui.Checkbox("显示底栏", ref this.ShowFooter);
                 if (this.ShowFooter)
                 {
                     DrawHelpers.DrawNestIndicator(1);
-                    ImGui.DragInt("Height##Footer", ref this.FooterHeight, 1, 0, 100);
+                    ImGui.DragInt("高度##Footer", ref this.FooterHeight, 1, 0, 100);
 
                     DrawHelpers.DrawNestIndicator(1);
-                    DrawHelpers.DrawColorSelector("Background Color##Footer", this.FooterBackgroundColor);
+                    DrawHelpers.DrawColorSelector("背景颜色##Footer", this.FooterBackgroundColor);
                 }
 
                 ImGui.EndChild();
