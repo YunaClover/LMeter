@@ -135,7 +135,7 @@ namespace LMeter.Config
                 DrawHelpers.DrawColorSelector("格斗家 (PGL)", this.PGLColor);
                 DrawHelpers.DrawColorSelector("盗贼 (ROG)", this.ROGColor);
                 DrawHelpers.DrawColorSelector("枪术师 (LNC)", this.LNCColor);
-                DrawHelpers.DrawColorSelector("弓术师 (ARC)", this.ARCColor);
+                DrawHelpers.DrawColorSelector("弓箭手 (ARC)", this.ARCColor);
                 DrawHelpers.DrawColorSelector("咒术师 (THM)", this.THMColor);
                 DrawHelpers.DrawColorSelector("秘术师 (ACN)", this.ACNColor);
 
