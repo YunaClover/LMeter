@@ -80,7 +80,7 @@ namespace LMeter.Config
         {
             if (ImGui.BeginChild($"##{this.Name}", size, border))
             {
-                ImGui.Checkbox("Show Header", ref this.ShowHeader);
+                ImGui.Checkbox("显示标题栏", ref this.ShowHeader);
                 if (this.ShowHeader)
                 {
                     DrawHelpers.DrawNestIndicator(1);
