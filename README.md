@@ -1,4 +1,4 @@
-# LMeterCN
+# LMeter汉化
 
 ![build status](https://github.com/lichie567/LMeter/actions/workflows/build-debug.yml/badge.svg?branch=main)
 ![release status](https://github.com/lichie567/LMeter/actions/workflows/release.yml/badge.svg)
