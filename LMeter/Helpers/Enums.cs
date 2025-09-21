@@ -34,6 +34,7 @@ namespace LMeter.Helpers
     {
         GoldSaucer,
         PlayerHouse,
+        FrontLine,
     }
 
     public enum MeterDataType

@@ -409,6 +409,8 @@ namespace LMeter.Config
                 DrawHelpers.DrawNestIndicator(1);
                 ImGui.RadioButton("金蝶", ref Unsafe.As<ZoneType, int>(ref this.Zone), (int)ZoneType.GoldSaucer);
                 DrawHelpers.DrawNestIndicator(1);
+                ImGui.RadioButton("纷争前线", ref Unsafe.As<ZoneType, int>(ref this.Zone), (int)ZoneType.FrontLine);
+                DrawHelpers.DrawNestIndicator(1);
                 ImGui.RadioButton(
                     "玩家住宅",
                     ref Unsafe.As<ZoneType, int>(ref this.Zone),
