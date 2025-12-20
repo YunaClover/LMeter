@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using Dalamud.Game;
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -17,7 +15,7 @@ namespace LMeter
     {
         public const string ConfigFileName = "LMeter.json";
 
-        public static string Version { get; private set; } = "0.4.2.32";
+        public static string Version { get; private set; } = "0.4.3.1";
         public static string ConfigFileDir { get; private set; } = "";
         public static string ConfigFilePath { get; private set; } = "";
         public static string AssemblyFileDir { get; private set; } = "";
@@ -27,6 +25,7 @@ namespace LMeter
 
         public Plugin(
             IClientState clientState,
+            IPlayerState playerState,
             ICommandManager commandManager,
             ICondition condition,
             IDalamudPluginInterface pluginInterface,
@@ -36,7 +35,6 @@ namespace LMeter
             IJobGauges jobGauges,
             IObjectTable objectTable,
             IPartyList partyList,
-            ISigScanner sigScanner,
             ITargetManager targetManager,
             IChatGui chatGui,
             IPluginLog logger,
@@ -52,6 +50,7 @@ namespace LMeter
 
             // Register Dalamud APIs
             Singletons.Register(clientState);
+            Singletons.Register(playerState);
             Singletons.Register(commandManager);
             Singletons.Register(condition);
             Singletons.Register(pluginInterface);
@@ -61,7 +60,6 @@ namespace LMeter
             Singletons.Register(jobGauges);
             Singletons.Register(objectTable);
             Singletons.Register(partyList);
-            Singletons.Register(sigScanner);
             Singletons.Register(targetManager);
             Singletons.Register(chatGui);
             Singletons.Register(pluginInterface.UiBuilder);
@@ -115,7 +113,7 @@ namespace LMeter
             config.FirstLoad = false;
 
             // Start the plugin
-            Singletons.Register(new PluginManager(clientState, commandManager, pluginInterface, config));
+            Singletons.Register(new PluginManager(clientState, playerState, commandManager, pluginInterface, config));
         }
 
         private static IDalamudTextureWrap? LoadIconTexture(ITextureProvider textureProvider)

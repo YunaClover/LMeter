@@ -33,6 +33,7 @@ namespace LMeter.Config
         public int ClientType = 0;
         public bool UseFFLogs = false;
         public bool DisableFFLogsOutsideDuty = true;
+        public bool LogConnectionErrors = true;
 
         public ActConfig()
         {
@@ -111,6 +112,8 @@ namespace LMeter.Config
                     ImGui.InputInt("重连间隔秒数", ref this.ReconnectDelay, 0, 0);
                     ImGui.PopItemWidth();
                 }
+
+                ImGui.Checkbox("Log connection errors", ref this.LogConnectionErrors);
 
                 ImGui.NewLine();
                 ImGui.Checkbox("清除 LMeter 时同时清除 ACT", ref this.ClearAct);
