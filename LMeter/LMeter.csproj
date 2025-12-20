@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿<Project Sdk="Microsoft.NET.Sdk">
-=======
 <Project Sdk="Dalamud.NET.Sdk/14.0.1">
->>>>>>> a028eac6700ee1e2654a6f9c7396bd9ca49b2142
     <PropertyGroup Label="Target">
         <PlatformTarget>x64</PlatformTarget>
         <TargetFramework>net10.0-windows</TargetFramework>
@@ -106,15 +102,4 @@
             <Private>false</Private>
         </Reference>
     </ItemGroup>
-<<<<<<< HEAD
-    <!-- NuGet Packages -->
-    <ItemGroup>
-        <PackageReference Include="DalamudPackager" Version="14.0.0" />
-    </ItemGroup>
-    <!-- Dalamud Packager Task-->
-    <Target Name="DalamudPackage" AfterTargets="Build">
-        <DalamudPackager ProjectDir="$(ProjectDir)" OutputPath="$(TargetDir)..\$(Configuration)" AssemblyName="$(AssemblyName)" MakeZip="true" Exclude="LMeter.pdb;LMeter.deps.json" VersionComponents="4" />
-    </Target>
-=======
->>>>>>> a028eac6700ee1e2654a6f9c7396bd9ca49b2142
 </Project>
