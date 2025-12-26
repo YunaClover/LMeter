@@ -11,7 +11,7 @@ namespace LMeter.Helpers
     public static class CharacterState
     {
         private static readonly uint[] _goldSaucerIds = [144, 388, 389, 390, 391, 579, 792, 899, 941];
-        private static readonly uint[] _frontlineIds = [888,502,701,554];   //添加战场区域ID
+        private static readonly uint[] _frontlineIds = [888,502,701,554,1313];   //添加战场区域ID
         private static readonly ushort[] _houseIds =
         [
             // Small, Medium, Large, Chamber, Apartment
