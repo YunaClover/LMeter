@@ -62,8 +62,8 @@ namespace LMeter
                         "Opens the LMeter configuration window.\n"
                         + "/lm end → Ends current Act Encounter.\n"
                         + "/lm clear → Clears all Act encounter log data.\n"
-                        + "/lm ct <number> → Toggles clickthrough status for the given profile.\n"
-                        + "/lm toggle <number> [on|off] → Toggles visibility for the given profile.",
+                        + "/lm ct [number] → Toggles clickthrough status for the given profile.\n"
+                        + "/lm toggle [number] → Toggles visibility for the given profile.",
                     ShowInHelp = true,
                 }
             );
