@@ -11,11 +11,7 @@ namespace LMeter.Config
         public bool Active { get; set; }
         public string Name => "伤害数据";
 
-<<<<<<< HEAD
         private static readonly string[] _jobIconStyleOptions = ["类型1", "类型2"];
-=======
-        private static readonly string[] m_jobIconStyleOptions = ["Style 1", "Style 2"];
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
 
         public int BarHeightType = 0;
         public int BarCount = 8;

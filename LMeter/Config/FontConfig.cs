@@ -86,13 +86,8 @@ namespace LMeter.Config
                         buttonSize
                     );
 
-<<<<<<< HEAD
                     string[] fontNames = _fontPaths.Select(x => FontsManager.GetFontName(_fontPath, x)).ToArray();
                     ImGui.Combo("字体", ref _selectedFont, fontNames, fontNames.Length);
-=======
-                    string[] fontNames = m_fontPaths.Select(x => FontsManager.GetFontName(m_fontPath, x)).ToArray();
-                    ImGui.Combo("Font", ref m_selectedFont, fontNames, fontNames.Length);
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                     ImGui.SameLine();
                     DrawHelpers.DrawButton(
                         string.Empty,
@@ -102,17 +97,12 @@ namespace LMeter.Config
                         buttonSize
                     );
 
-<<<<<<< HEAD
                     ImGui.Combo("字号", ref _selectedSize, _sizes, _sizes.Length);
-=======
-                    ImGui.Combo("Size", ref m_selectedSize, m_sizes, m_sizes.Length);
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                     ImGui.SameLine();
                     ImGui.SetCursorPosX(ImGui.GetCursorPosX() + 3f);
                     DrawHelpers.DrawButton(
                         string.Empty,
                         FontAwesomeIcon.Plus,
-<<<<<<< HEAD
                         () => AddFont(_selectedFont, _selectedSize),
                         "添加字体",
                         buttonSize
@@ -124,30 +114,6 @@ namespace LMeter.Config
 
                     DrawHelpers.DrawSpacing(1);
                     ImGui.Text("字体列表");
-=======
-                        () => AddFont(m_selectedFont, m_selectedSize),
-                        "Add Font",
-                        buttonSize
-                    );
-
-                    ImGui.Checkbox("Chinese/Japanese", ref m_chinese);
-                    ImGui.SameLine();
-                    ImGui.Checkbox("Korean", ref m_korean);
-                    ImGui.SameLine();
-                    ImGui.SetCursorPosX(ImGui.GetCursorPosX() + 81f);
-                    ImGui.Text("Add System or Game Font");
-                    ImGui.SameLine();
-
-                    DrawHelpers.DrawButton(
-                        string.Empty,
-                        FontAwesomeIcon.Font,
-                        () => DisplayFontSelector(),
-                        string.Empty,
-                        buttonSize
-                    );
-
-                    ImGui.Text("Font List");
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
 
                     ImGuiTableFlags tableFlags =
                         ImGuiTableFlags.RowBg
