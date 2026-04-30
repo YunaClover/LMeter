@@ -14,14 +14,14 @@ namespace LMeter.Helpers
 {
     public static class ConfigHelpers
     {
-        private static readonly ISerializationBinder m_serializationBinder = new LMeterSerializationBinder();
+        private static readonly ISerializationBinder _serializationBinder = new LMeterSerializationBinder();
 
-        private static readonly JsonSerializerSettings m_serializerSettings = new()
+        private static readonly JsonSerializerSettings _serializerSettings = new()
         {
             TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
             TypeNameHandling = TypeNameHandling.Objects,
             ObjectCreationHandling = ObjectCreationHandling.Replace,
-            SerializationBinder = m_serializationBinder,
+            SerializationBinder = _serializationBinder,
         };
 
         public static void ExportToClipboard<T>(T toExport)
@@ -43,7 +43,7 @@ namespace LMeter.Helpers
         {
             try
             {
-                string jsonString = JsonConvert.SerializeObject(toExport, Formatting.None, m_serializerSettings);
+                string jsonString = JsonConvert.SerializeObject(toExport, Formatting.None, _serializerSettings);
                 using (MemoryStream outputStream = new())
                 {
                     using (DeflateStream compressionStream = new(outputStream, CompressionLevel.Optimal))
@@ -86,7 +86,7 @@ namespace LMeter.Helpers
                     }
                 }
 
-                T? importedObj = JsonConvert.DeserializeObject<T>(decodedJsonString, m_serializerSettings);
+                T? importedObj = JsonConvert.DeserializeObject<T>(decodedJsonString, _serializerSettings);
                 return importedObj;
             }
             catch (Exception ex)
@@ -108,7 +108,7 @@ namespace LMeter.Helpers
                     using FileStream fs = File.OpenRead(path);
                     using StreamReader sr = new(fs);
                     using JsonTextReader reader = new(sr);
-                    JsonSerializer serializer = JsonSerializer.Create(m_serializerSettings);
+                    JsonSerializer serializer = JsonSerializer.Create(_serializerSettings);
                     config = serializer.Deserialize<LMeterConfig>(reader);
                 }
             }
@@ -143,7 +143,7 @@ namespace LMeter.Helpers
         {
             try
             {
-                string jsonString = JsonConvert.SerializeObject(config, Formatting.Indented, m_serializerSettings);
+                string jsonString = JsonConvert.SerializeObject(config, Formatting.Indented, _serializerSettings);
                 File.WriteAllText(Plugin.ConfigFilePath, jsonString);
             }
             catch (Exception ex)
@@ -159,30 +159,31 @@ namespace LMeter.Helpers
     /// </summary>
     public class LMeterSerializationBinder : ISerializationBinder
     {
-        private static readonly List<Type> m_configTypes = [typeof(ActConfig)];
-        private static readonly Dictionary<string, string> m_typeNameConversions = new()
+        private static readonly List<Type> _configTypes = [typeof(ActConfig)];
+
+        private static readonly Dictionary<string, string> _typeNameConversions = new()
         {
             { "VisibilityConfig2", "VisibilityConfig" },
         };
 
-        private readonly Dictionary<Type, string> m_typeToName = [];
-        private readonly Dictionary<string, Type> m_nameToType = [];
+        private readonly Dictionary<Type, string> _typeToName = [];
+        private readonly Dictionary<string, Type> _nameToType = [];
 
         public LMeterSerializationBinder()
         {
-            foreach (Type type in m_configTypes)
+            foreach (Type type in _configTypes)
             {
                 if (type.FullName is not null)
                 {
-                    m_typeToName.Add(type, type.FullName.ToLower());
-                    m_nameToType.Add(type.FullName.ToLower(), type);
+                    _typeToName.Add(type, type.FullName.ToLower());
+                    _nameToType.Add(type.FullName.ToLower(), type);
                 }
             }
         }
 
         public void BindToName(Type serializedType, out string? assemblyName, out string? typeName)
         {
-            if (m_typeToName.TryGetValue(serializedType, out string? name))
+            if (_typeToName.TryGetValue(serializedType, out string? name))
             {
                 assemblyName = null;
                 typeName = name;
@@ -201,7 +202,7 @@ namespace LMeter.Helpers
                 throw new TypeLoadException("Type name was null.");
             }
 
-            if (m_nameToType.TryGetValue(typeName.ToLower(), out Type? type))
+            if (_nameToType.TryGetValue(typeName.ToLower(), out Type? type))
             {
                 return type;
             }
@@ -209,7 +210,7 @@ namespace LMeter.Helpers
             Type? loadedType = Type.GetType($"{typeName}, {assemblyName}", false);
             if (loadedType is null)
             {
-                foreach (var entry in m_typeNameConversions)
+                foreach (var entry in _typeNameConversions)
                 {
                     if (typeName.Contains(entry.Key))
                     {

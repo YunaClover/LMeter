@@ -14,12 +14,12 @@ namespace LMeter.Config
     public class MeterListConfig : IConfigPage
     {
         [JsonIgnore]
-        private string m_input = string.Empty;
+        private string _input = string.Empty;
 
         [JsonIgnore]
-        private MeterDataType m_meterDataType = MeterDataType.Damage;
+        private MeterDataType _meterDataType = MeterDataType.Damage;
 
-        private const float MENU_BAR_HEIGHT = 40;
+        private const float MenuBarHeight = 40;
 
         [JsonIgnore]
         public bool Active { get; set; }
@@ -77,36 +77,23 @@ namespace LMeter.Config
             float meterTypeWidth = 100f;
             float textInputWidth = size.X - meterTypeWidth - buttonSize.X * 2 - padX * 5;
 
-            if (ImGui.BeginChild("##Buttons", new Vector2(size.X, MENU_BAR_HEIGHT), true))
+            if (ImGui.BeginChild("##Buttons", new Vector2(size.X, MenuBarHeight), true))
             {
                 ImGui.PushItemWidth(textInputWidth);
-<<<<<<< HEAD
                 ImGui.InputTextWithHint("##Input", "配置名称/导入配置字符串", ref _input, 10000);
-=======
-                ImGui.InputTextWithHint("##Input", "Profile Name/Import String", ref m_input, 10000);
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                 ImGui.PopItemWidth();
 
                 ImGui.PushItemWidth(meterTypeWidth);
                 ImGui.SameLine();
-<<<<<<< HEAD
                 ImGui.Combo("", ref Unsafe.As<MeterDataType, int>(ref _meterDataType), ["伤害", "治疗"], 2);
-=======
-                ImGui.Combo("", ref Unsafe.As<MeterDataType, int>(ref m_meterDataType), ["Damage", "Healing"], 2);
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                 ImGui.PopItemWidth();
 
                 ImGui.SameLine();
                 DrawHelpers.DrawButton(
                     string.Empty,
                     FontAwesomeIcon.Plus,
-<<<<<<< HEAD
                     () => CreateMeter(_input, _meterDataType),
                     "新建统计窗口",
-=======
-                    () => CreateMeter(m_input, m_meterDataType),
-                    "Create new Meter",
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                     buttonSize
                 );
 
@@ -114,13 +101,8 @@ namespace LMeter.Config
                 DrawHelpers.DrawButton(
                     string.Empty,
                     FontAwesomeIcon.Download,
-<<<<<<< HEAD
                     () => ImportMeter(_input),
                     "从字符串导入统计窗口",
-=======
-                    () => ImportMeter(m_input),
-                    "Import new Meter",
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                     buttonSize
                 );
                 ImGui.PopItemWidth();
@@ -139,7 +121,7 @@ namespace LMeter.Config
                 | ImGuiTableFlags.ScrollY
                 | ImGuiTableFlags.NoSavedSettings;
 
-            if (ImGui.BeginTable("##Meter_Table", 3, flags, new Vector2(size.X, size.Y - MENU_BAR_HEIGHT)))
+            if (ImGui.BeginTable("##Meter_Table", 3, flags, new Vector2(size.X, size.Y - MenuBarHeight)))
             {
                 Vector2 buttonsize = new(30, 0);
                 float actionsWidth = buttonsize.X * 3 + padX * 2;
@@ -156,8 +138,8 @@ namespace LMeter.Config
                     MeterWindow meter = this.Meters[i];
 
                     if (
-                        !string.IsNullOrEmpty(m_input)
-                        && !meter.Name.Contains(m_input, StringComparison.OrdinalIgnoreCase)
+                        !string.IsNullOrEmpty(_input)
+                        && !meter.Name.Contains(_input, StringComparison.OrdinalIgnoreCase)
                     )
                     {
                         continue;
@@ -220,7 +202,7 @@ namespace LMeter.Config
                 this.Meters.Add(MeterWindow.GetDefaultMeter(dataType, name));
             }
 
-            m_input = string.Empty;
+            _input = string.Empty;
         }
 
         private void EditMeter(MeterWindow meter)
@@ -251,7 +233,7 @@ namespace LMeter.Config
                 DrawHelpers.DrawNotification("Failed to Import Meter!", NotificationType.Error);
             }
 
-            m_input = string.Empty;
+            _input = string.Empty;
         }
 
         private void ExportMeter(MeterWindow meter)

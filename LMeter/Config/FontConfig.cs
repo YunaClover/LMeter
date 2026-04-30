@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
-using Dalamud.Interface.FontIdentifier;
-using Dalamud.Interface.ImGuiFontChooserDialog;
 using LMeter.Helpers;
 using Newtonsoft.Json;
 
@@ -14,36 +11,30 @@ namespace LMeter.Config
     public class FontConfig : IConfigPage
     {
         [JsonIgnore]
-        private const int MIN_SIZE = 6;
-
-        [JsonIgnore]
         public bool Active { get; set; }
 
         public string Name => "字体";
 
         [JsonIgnore]
-        private static readonly string? m_fontPath = FontsManager.GetUserFontPath();
+        private static readonly string? _fontPath = FontsManager.GetUserFontPath();
 
         [JsonIgnore]
-        private int m_selectedFont = 0;
+        private int _selectedFont = 0;
 
         [JsonIgnore]
-        private int m_selectedSize = 10;
+        private int _selectedSize = 23;
 
         [JsonIgnore]
-        private string[] m_fontPaths = FontsManager.GetFontPaths(FontsManager.GetUserFontPath());
+        private string[] _fontPaths = FontsManager.GetFontPaths(FontsManager.GetUserFontPath());
 
         [JsonIgnore]
-        private readonly string[] m_sizes = Enumerable
-            .Range(MIN_SIZE, 48 - MIN_SIZE + 1)
-            .Select(i => i.ToString())
-            .ToArray();
+        private readonly string[] _sizes = Enumerable.Range(1, 40).Select(i => i.ToString()).ToArray();
 
         [JsonIgnore]
-        private bool m_chinese = false;
+        private bool _chinese = false;
 
         [JsonIgnore]
-        private bool m_korean = false;
+        private bool _korean = false;
 
         public Dictionary<string, FontData> Fonts { get; set; }
 
@@ -62,14 +53,14 @@ namespace LMeter.Config
 
         public void DrawConfig(Vector2 size, float padX, float padY, bool border = true)
         {
-            if (m_fontPaths.Length == 0)
+            if (_fontPaths.Length == 0)
             {
                 RefreshFontList();
             }
 
             if (ImGui.BeginChild("##FontConfig", new Vector2(size.X, size.Y), border))
             {
-                if (m_fontPath is not null)
+                if (_fontPath is not null)
                 {
                     float cursorY = ImGui.GetCursorPosY();
                     ImGui.SetCursorPosY(cursorY + 2f);
@@ -81,7 +72,7 @@ namespace LMeter.Config
                     DrawHelpers.DrawButton(
                         string.Empty,
                         FontAwesomeIcon.Copy,
-                        () => ImGui.SetClipboardText(m_fontPath),
+                        () => ImGui.SetClipboardText(_fontPath),
                         null,
                         buttonSize
                     );
@@ -199,51 +190,20 @@ namespace LMeter.Config
 
         public void RefreshFontList()
         {
-            m_fontPaths = FontsManager.GetFontPaths(FontsManager.GetUserFontPath());
+            _fontPaths = FontsManager.GetFontPaths(FontsManager.GetUserFontPath());
         }
 
         private void AddFont(int fontIndex, int size)
         {
             FontData newFont = new(
-                FontsManager.GetFontName(m_fontPath, m_fontPaths[fontIndex]),
-                m_fontPaths[fontIndex],
-                size + MIN_SIZE,
-                m_chinese,
-                m_korean
+                FontsManager.GetFontName(_fontPath, _fontPaths[fontIndex]),
+                _fontPaths[fontIndex],
+                size + 1,
+                _chinese,
+                _korean
             );
-
             string key = FontsManager.GetFontKey(newFont);
-            if (this.Fonts.TryAdd(key, newFont))
-            {
-                Singletons.Get<FontsManager>().UpdateFonts(this.Fonts.Values);
-            }
-        }
 
-        public void DisplayFontSelector()
-        {
-            if (Singletons.Get<IUiBuilder>() is UiBuilder uiBuilder)
-            {
-                SingleFontChooserDialog fcd = new(uiBuilder);
-                uiBuilder.Draw += fcd.Draw;
-                fcd.ResultTask.ContinueWith(r =>
-                {
-                    _ = r.Exception;
-                    uiBuilder.Draw -= fcd.Draw;
-                    SelectFontCallback(fcd.ResultTask.Result);
-                    fcd.Dispose();
-                });
-            }
-        }
-
-        private void SelectFontCallback(SingleFontSpec fontSpec)
-        {
-            string culture = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-            string familyName = fontSpec.FontId.Family.GetLocalizedName(culture);
-            string fontIdName = fontSpec.FontId.GetLocalizedName(culture);
-            string fontName = familyName.Equals(fontIdName) ? familyName : $"{familyName}_{fontIdName}";
-            FontData newFont = new(fontName, string.Empty, fontSpec.SizePt, false, false, fontSpec);
-
-            string key = FontsManager.GetFontKey(newFont);
             if (this.Fonts.TryAdd(key, newFont))
             {
                 Singletons.Get<FontsManager>().UpdateFonts(this.Fonts.Values);

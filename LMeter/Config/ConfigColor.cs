@@ -7,7 +7,7 @@ namespace LMeter.Config
     public class ConfigColor
     {
         [JsonIgnore]
-        private readonly float[] m_colorMapRatios = [-.8f, -.3f, .1f];
+        private readonly float[] _colorMapRatios = [-.8f, -.3f, .1f];
 
         // Constructor for deserialization
         public ConfigColor()
@@ -17,7 +17,7 @@ namespace LMeter.Config
         {
             if (colorMapRatios != null && colorMapRatios.Length == 3)
             {
-                m_colorMapRatios = colorMapRatios;
+                _colorMapRatios = colorMapRatios;
             }
 
             this.Vector = vector;
@@ -27,18 +27,18 @@ namespace LMeter.Config
             : this(new Vector4(r, g, b, a), colorMapRatios) { }
 
         [JsonIgnore]
-        private Vector4 m_vector;
+        private Vector4 _vector;
         public Vector4 Vector
         {
-            get => m_vector;
+            get => _vector;
             set
             {
-                if (m_vector == value)
+                if (_vector == value)
                 {
                     return;
                 }
 
-                m_vector = value;
+                _vector = value;
 
                 Update();
             }
@@ -58,7 +58,7 @@ namespace LMeter.Config
 
         private void Update()
         {
-            Base = ImGui.ColorConvertFloat4ToU32(m_vector);
+            Base = ImGui.ColorConvertFloat4ToU32(_vector);
             // Background = ImGui.ColorConvertFloat4ToU32(_vector.AdjustColor(_colorMapRatios[0]));
             // TopGradient = ImGui.ColorConvertFloat4ToU32(_vector.AdjustColor(_colorMapRatios[1]));
             // BottomGradient = ImGui.ColorConvertFloat4ToU32(_vector.AdjustColor(_colorMapRatios[2]));

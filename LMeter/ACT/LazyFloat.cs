@@ -5,10 +5,10 @@ namespace LMeter.Act
 {
     public class LazyFloat
     {
-        private readonly Func<string>? m_getStringInput;
-        private readonly Func<float>? m_getFloatInput;
-        private float m_value = 0;
-        private string? m_input;
+        private readonly Func<string>? _getStringInput;
+        private readonly Func<float>? _getFloatInput;
+        private float _value = 0;
+        private string? _input;
 
         public bool Generated { get; private set; }
 
@@ -18,59 +18,59 @@ namespace LMeter.Act
             {
                 if (this.Generated)
                 {
-                    return m_value;
+                    return _value;
                 }
 
-                if (m_input is null)
+                if (_input is null)
                 {
-                    if (m_getFloatInput is not null)
+                    if (_getFloatInput is not null)
                     {
-                        m_value = m_getFloatInput.Invoke();
+                        _value = _getFloatInput.Invoke();
                         this.Generated = true;
-                        return m_value;
+                        return _value;
                     }
-                    else if (m_getStringInput is not null)
+                    else if (_getStringInput is not null)
                     {
-                        m_input = m_getStringInput.Invoke();
+                        _input = _getStringInput.Invoke();
                     }
                 }
 
                 if (
-                    float.TryParse(m_input, NumberStyles.Float, CultureInfo.InvariantCulture, out float parsed)
+                    float.TryParse(_input, NumberStyles.Float, CultureInfo.InvariantCulture, out float parsed)
                     && !float.IsNaN(parsed)
                 )
                 {
-                    m_value = parsed;
+                    _value = parsed;
                 }
                 else
                 {
-                    m_value = 0;
+                    _value = 0;
                 }
 
                 this.Generated = true;
-                return m_value;
+                return _value;
             }
         }
 
         public LazyFloat(string? input)
         {
-            m_input = input;
+            _input = input;
         }
 
         public LazyFloat(float value)
         {
-            m_value = value;
+            _value = value;
             this.Generated = true;
         }
 
         public LazyFloat(Func<float> input)
         {
-            m_getFloatInput = input;
+            _getFloatInput = input;
         }
 
         public LazyFloat(Func<string> input)
         {
-            m_getStringInput = input;
+            _getStringInput = input;
         }
 
         public override string? ToString()

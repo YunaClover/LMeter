@@ -13,7 +13,7 @@ namespace LMeter
 {
     public class Plugin : IDalamudPlugin
     {
-        public const string CONFIG_FILE = "LMeter.json";
+        public const string ConfigFileName = "LMeter.json";
 
         public static string Version { get; private set; } = "0.4.3.31";
         public static string ConfigFileDir { get; private set; } = "";
@@ -45,7 +45,7 @@ namespace LMeter
         {
             Plugin.Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? Plugin.Version;
             Plugin.ConfigFileDir = pluginInterface.GetPluginConfigDirectory();
-            Plugin.ConfigFilePath = Path.Combine(pluginInterface.GetPluginConfigDirectory(), Plugin.CONFIG_FILE);
+            Plugin.ConfigFilePath = Path.Combine(pluginInterface.GetPluginConfigDirectory(), Plugin.ConfigFileName);
             Plugin.AssemblyFileDir = pluginInterface.AssemblyLocation.DirectoryName ?? "";
 
             // Register Dalamud APIs
@@ -96,6 +96,8 @@ namespace LMeter
                 1 => new IpcClient(config.ActConfig),
                 _ => new WebSocketClient(config.ActConfig),
             };
+
+            actClient.Start();
             Singletons.Register(actClient);
 
             // Create profile on first load

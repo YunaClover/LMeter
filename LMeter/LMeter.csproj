@@ -21,7 +21,4 @@
         <Content Include="Media\**" CopyToOutputDirectory="PreserveNewest" />
         <Content Include="Media\Images\icon.png" Link="images/icon.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
     </ItemGroup>
-    <ItemGroup>
-      <PackageReference Update="DotNet.ReproducibleBuilds" Version="2.0.2" />
-    </ItemGroup>
 </Project>

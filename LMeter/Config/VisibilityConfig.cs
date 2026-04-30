@@ -20,13 +20,13 @@ namespace LMeter.Config
         public static readonly string[] ResultOptions = ["显示", "隐藏"];
 
         [JsonIgnore]
-        private int m_swapX = -1;
+        private int _swapX = -1;
 
         [JsonIgnore]
-        private int m_swapY = -1;
+        private int _swapY = -1;
 
         [JsonIgnore]
-        private int m_selectedIndex = 0;
+        private int _selectedIndex = 0;
 
         [JsonIgnore]
         public bool Active { get; set; }
@@ -157,18 +157,18 @@ namespace LMeter.Config
                     ImGui.EndTable();
 
                     if (
-                        m_swapX < this.VisibilityConditions.Count
-                        && m_swapX >= 0
-                        && m_swapY < this.VisibilityConditions.Count
-                        && m_swapY >= 0
+                        _swapX < this.VisibilityConditions.Count
+                        && _swapX >= 0
+                        && _swapY < this.VisibilityConditions.Count
+                        && _swapY >= 0
                     )
                     {
-                        VisibilityCondition temp = this.VisibilityConditions[m_swapX];
-                        this.VisibilityConditions[m_swapX] = this.VisibilityConditions[m_swapY];
-                        this.VisibilityConditions[m_swapY] = temp;
+                        VisibilityCondition temp = this.VisibilityConditions[_swapX];
+                        this.VisibilityConditions[_swapX] = this.VisibilityConditions[_swapY];
+                        this.VisibilityConditions[_swapY] = temp;
 
-                        m_swapX = -1;
-                        m_swapY = -1;
+                        _swapX = -1;
+                        _swapY = -1;
                     }
                 }
 
@@ -179,11 +179,7 @@ namespace LMeter.Config
                 ImGui.Combo("##ResultCombo", ref this.ResultOption, ResultOptions, ResultOptions.Length);
                 ImGui.PopItemWidth();
 
-<<<<<<< HEAD
                 ImGui.Text($"编辑条件 {_selectedIndex + 1}");
-=======
-                ImGui.Text($"Edit Condition {m_selectedIndex + 1}");
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                 if (
                     ImGui.BeginChild(
                         "##ConditionEdit",
@@ -192,7 +188,7 @@ namespace LMeter.Config
                     )
                 )
                 {
-                    VisibilityCondition selectedOption = this.VisibilityConditions[m_selectedIndex];
+                    VisibilityCondition selectedOption = this.VisibilityConditions[_selectedIndex];
                     selectedOption.DrawConfig(ImGui.GetWindowSize(), padX, padX);
 
                     ImGui.EndChild();
@@ -302,7 +298,7 @@ namespace LMeter.Config
 
         private void SelectOption(int i)
         {
-            m_selectedIndex = i;
+            _selectedIndex = i;
         }
 
         private void AddOption(VisibilityCondition? newOption = null)
@@ -337,21 +333,21 @@ namespace LMeter.Config
             if (i < this.VisibilityConditions.Count && i >= 0)
             {
                 this.VisibilityConditions.RemoveAt(i);
-                m_selectedIndex = Math.Clamp(m_selectedIndex, 0, this.VisibilityConditions.Count - 1);
+                _selectedIndex = Math.Clamp(_selectedIndex, 0, this.VisibilityConditions.Count - 1);
             }
         }
 
         private void Swap(int x, int y)
         {
-            m_swapX = x;
-            m_swapY = y;
+            _swapX = x;
+            _swapY = y;
         }
     }
 
     public class VisibilityCondition
     {
         [JsonIgnore]
-        private string m_customJobInput = string.Empty;
+        private string _customJobInput = string.Empty;
 
         public bool Inverted = false;
         public BooleanOperator Operator = BooleanOperator.And;
@@ -440,29 +436,23 @@ namespace LMeter.Config
 
                 if (this.ShowForJobTypes == JobType.Custom)
                 {
-                    if (string.IsNullOrEmpty(m_customJobInput))
+                    if (string.IsNullOrEmpty(_customJobInput))
                     {
-                        m_customJobInput = this.CustomJobString.ToUpper();
+                        _customJobInput = this.CustomJobString.ToUpper();
                     }
 
                     DrawHelpers.DrawNestIndicator(1);
                     if (
                         ImGui.InputTextWithHint(
-<<<<<<< HEAD
                             "自定义职业列表",
                             "逗号分隔 (如: WAR, SAM, BLM)",
                             ref _customJobInput,
-=======
-                            "Custom Job List",
-                            "Comma Separated List (ex: WAR, SAM, BLM)",
-                            ref m_customJobInput,
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                             100,
                             ImGuiInputTextFlags.EnterReturnsTrue
                         )
                     )
                     {
-                        IEnumerable<string> jobStrings = m_customJobInput.Split(',').Select(j => j.Trim());
+                        IEnumerable<string> jobStrings = _customJobInput.Split(',').Select(j => j.Trim());
                         List<Job> jobList = [];
                         foreach (string j in jobStrings)
                         {
@@ -473,13 +463,13 @@ namespace LMeter.Config
                             else
                             {
                                 jobList.Clear();
-                                m_customJobInput = string.Empty;
+                                _customJobInput = string.Empty;
                                 break;
                             }
                         }
 
-                        m_customJobInput = m_customJobInput.ToUpper();
-                        this.CustomJobString = m_customJobInput;
+                        _customJobInput = _customJobInput.ToUpper();
+                        this.CustomJobString = _customJobInput;
                         this.CustomJobList = jobList;
                     }
                 }

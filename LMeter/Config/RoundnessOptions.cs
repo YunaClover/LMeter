@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Dalamud.Bindings.ImGui;
 using LMeter.Helpers;
 
