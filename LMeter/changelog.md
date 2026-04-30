@@ -1,4 +1,5 @@
 # Version 0.4.4.0
+- Update for patch 7.5 (API 15)
 - Added support for System and Game fonts
 - Improved logic for first connection attempt to ACT
 
