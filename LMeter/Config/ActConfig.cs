@@ -65,13 +65,8 @@ namespace LMeter.Config
                 if (this.ClientType == 0)
                 {
                     ImGui.InputTextWithHint(
-<<<<<<< HEAD
                         "ACT Websocket地址",
                         $"Default: '{_defaultSocketAddress}'",
-=======
-                        "ACT Websocket Address",
-                        $"Default: '{SOCKET_ADDRESS}'",
->>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                         ref this.ActSocketAddress,
                         64
                     );
