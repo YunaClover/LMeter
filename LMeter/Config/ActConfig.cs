@@ -1,4 +1,3 @@
-using System;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
@@ -11,17 +10,10 @@ namespace LMeter.Config
     public class ActConfig : IConfigPage
     {
         [JsonIgnore]
-        private const string _defaultSocketAddress = "ws://127.0.0.1:10501/ws";
-
-        [JsonIgnore]
-        private DateTime? LastCombatTime { get; set; }
-
-        [JsonIgnore]
-        private DateTime? LastReconnectAttempt { get; set; }
+        private const string SOCKET_ADDRESS = "ws://127.0.0.1:10501/ws";
 
         [JsonIgnore]
         public bool Active { get; set; }
-
         public string Name => "ACT";
         public string ActSocketAddress;
         public int EncounterHistorySize = 15;
@@ -37,7 +29,7 @@ namespace LMeter.Config
 
         public ActConfig()
         {
-            this.ActSocketAddress = _defaultSocketAddress;
+            this.ActSocketAddress = SOCKET_ADDRESS;
         }
 
         public IConfigPage GetDefault() => new ActConfig();
@@ -73,8 +65,13 @@ namespace LMeter.Config
                 if (this.ClientType == 0)
                 {
                     ImGui.InputTextWithHint(
+<<<<<<< HEAD
                         "ACT Websocket地址",
                         $"Default: '{_defaultSocketAddress}'",
+=======
+                        "ACT Websocket Address",
+                        $"Default: '{SOCKET_ADDRESS}'",
+>>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                         ref this.ActSocketAddress,
                         64
                     );
@@ -159,48 +156,6 @@ namespace LMeter.Config
             }
 
             ImGui.EndChild();
-        }
-
-        public void TryReconnect()
-        {
-            ConnectionStatus status = Singletons.Get<LogClient>().Status;
-            if (
-                this.LastReconnectAttempt.HasValue
-                && (status == ConnectionStatus.NotConnected || status == ConnectionStatus.ConnectionFailed)
-            )
-            {
-                if (
-                    this.AutoReconnect
-                    && this.LastReconnectAttempt < DateTime.UtcNow - TimeSpan.FromSeconds(this.ReconnectDelay)
-                )
-                {
-                    Singletons.Get<LogClient>().Reset();
-                    this.LastReconnectAttempt = DateTime.UtcNow;
-                }
-            }
-            else
-            {
-                this.LastReconnectAttempt = DateTime.UtcNow;
-            }
-        }
-
-        public void TryEndEncounter()
-        {
-            if (Singletons.Get<LogClient>().Status == ConnectionStatus.Connected)
-            {
-                if (this.AutoEnd && CharacterState.IsInCombat())
-                {
-                    this.LastCombatTime = DateTime.UtcNow;
-                }
-                else if (
-                    this.LastCombatTime is not null
-                    && this.LastCombatTime < DateTime.UtcNow - TimeSpan.FromSeconds(this.AutoEndDelay)
-                )
-                {
-                    Singletons.Get<LogClient>().EndEncounter();
-                    this.LastCombatTime = null;
-                }
-            }
         }
     }
 }

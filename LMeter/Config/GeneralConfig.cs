@@ -10,7 +10,7 @@ namespace LMeter.Config
     public class GeneralConfig : IConfigPage
     {
         [JsonIgnore]
-        private static readonly string[] _meterTypeOptions = Enum.GetNames<MeterDataType>();
+        private static readonly string[] m_meterTypeOptions = Enum.GetNames<MeterDataType>();
 
         [JsonIgnore]
         public bool Preview = false;
@@ -18,8 +18,12 @@ namespace LMeter.Config
         [JsonIgnore]
         public bool Active { get; set; }
 
+<<<<<<< HEAD
         public string Name => "一般";
 
+=======
+        public string Name => "General";
+>>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
         public Vector2 Position = Vector2.Zero;
         public Vector2 Size = new(ImGui.GetMainViewport().Size.Y * 16 / 90, ImGui.GetMainViewport().Size.Y / 10);
         public bool Lock = false;
@@ -72,8 +76,8 @@ namespace LMeter.Config
                 ImGui.Combo(
                     "排序类型",
                     ref Unsafe.As<MeterDataType, int>(ref this.DataType),
-                    _meterTypeOptions,
-                    _meterTypeOptions.Length
+                    m_meterTypeOptions,
+                    m_meterTypeOptions.Length
                 );
 
                 ImGui.Checkbox("进入战斗时返回当前数据", ref this.ReturnToCurrent);

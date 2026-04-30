@@ -11,7 +11,11 @@ namespace LMeter.Config
         public bool Active { get; set; }
         public string Name => "伤害数据";
 
+<<<<<<< HEAD
         private static readonly string[] _jobIconStyleOptions = ["类型1", "类型2"];
+=======
+        private static readonly string[] m_jobIconStyleOptions = ["Style 1", "Style 2"];
+>>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
 
         public int BarHeightType = 0;
         public int BarCount = 8;
@@ -38,7 +42,7 @@ namespace LMeter.Config
         public ConfigColor RankTextColor = new(1, 1, 1, 1);
         public bool RankTextShowOutline = true;
         public ConfigColor RankTextOutlineColor = new(0, 0, 0, 0.5f);
-        public string RankTextFontKey = FontsManager.DalamudFontKey;
+        public string RankTextFontKey = FontsManager.DALAMUD_FONT_KEY;
         public int RankTextFontId = 0;
         public bool AlwaysShowSelf = false;
 
@@ -48,7 +52,7 @@ namespace LMeter.Config
         public ConfigColor BarNameColor = new(1, 1, 1, 1);
         public bool BarNameShowOutline = true;
         public ConfigColor BarNameOutlineColor = new(0, 0, 0, 0.5f);
-        public string BarNameFontKey = FontsManager.DalamudFontKey;
+        public string BarNameFontKey = FontsManager.DALAMUD_FONT_KEY;
         public int BarNameFontId = 0;
         public bool UseCharacterName = false;
 
@@ -58,7 +62,7 @@ namespace LMeter.Config
         public ConfigColor BarDataColor = new(1, 1, 1, 1);
         public bool BarDataShowOutline = true;
         public ConfigColor BarDataOutlineColor = new(0, 0, 0, 0.5f);
-        public string BarDataFontKey = FontsManager.DalamudFontKey;
+        public string BarDataFontKey = FontsManager.DALAMUD_FONT_KEY;
         public int BarDataFontId = 0;
 
         public bool ShowColumnHeader;
@@ -69,7 +73,7 @@ namespace LMeter.Config
         public bool ColumnHeaderShowOutline = true;
         public ConfigColor ColumnHeaderOutlineColor = new(0, 0, 0, 0.5f);
         public Vector2 ColumnHeaderOffset = new();
-        public string ColumnHeaderFontKey = FontsManager.DalamudFontKey;
+        public string ColumnHeaderFontKey = FontsManager.DALAMUD_FONT_KEY;
         public int ColumnHeaderFontId = 0;
 
         public float BarFillHeight = 1f;
@@ -148,8 +152,8 @@ namespace LMeter.Config
                     ImGui.Combo(
                         "职业图标样式",
                         ref this.JobIconStyle,
-                        _jobIconStyleOptions,
-                        _jobIconStyleOptions.Length
+                        m_jobIconStyleOptions,
+                        m_jobIconStyleOptions.Length
                     );
                     DrawHelpers.DrawNestIndicator(1);
                     DrawHelpers.DrawColorSelector("背景颜色##JobIcon", this.JobIconBackgroundColor);

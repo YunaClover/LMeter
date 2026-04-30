@@ -16,10 +16,10 @@ namespace LMeter.Config
         where T : IActData<T>
     {
         [JsonIgnore]
-        private string _textInput = string.Empty;
+        private string m_textInput = string.Empty;
 
         [JsonIgnore]
-        private int _selectedIndex;
+        private int m_selectedIndex;
 
         [JsonIgnore]
         public bool Active { get; set; }
@@ -179,7 +179,11 @@ namespace LMeter.Config
                     {
                         ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 1f);
                         ImGui.PushItemWidth(ImGui.GetColumnWidth());
+<<<<<<< HEAD
                         ImGui.InputTextWithHint($"##NewTextInput", "新建文本名称", ref _textInput, 10000);
+=======
+                        ImGui.InputTextWithHint($"##NewTextInput", "New Text Name", ref m_textInput, 10000);
+>>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                         ImGui.PopItemWidth();
                     }
 
@@ -189,8 +193,13 @@ namespace LMeter.Config
                         DrawHelpers.DrawButton(
                             string.Empty,
                             FontAwesomeIcon.Plus,
+<<<<<<< HEAD
                             () => AddText(_textInput),
                             "新建文本",
+=======
+                            () => AddText(m_textInput),
+                            "Create Text",
+>>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                             buttonSize
                         );
 
@@ -209,7 +218,11 @@ namespace LMeter.Config
 
                 if (this.Texts.Count != 0)
                 {
+<<<<<<< HEAD
                     ImGui.Text($"编辑 {this.Texts[_selectedIndex].Name}");
+=======
+                    ImGui.Text($"Edit {this.Texts[m_selectedIndex].Name}");
+>>>>>>> c60d95824ccac2c00a7dbaa31da1955a3cc6b4d8
                     if (
                         ImGui.BeginChild(
                             $"##SelectedText_Edit",
@@ -218,7 +231,7 @@ namespace LMeter.Config
                         )
                     )
                     {
-                        this.Texts[_selectedIndex].DrawConfig<T>();
+                        this.Texts[m_selectedIndex].DrawConfig<T>();
                         ImGui.EndChild();
                     }
                 }
@@ -234,18 +247,18 @@ namespace LMeter.Config
                 this.Texts.Add(new Text(name));
             }
 
-            _textInput = string.Empty;
+            m_textInput = string.Empty;
         }
 
         public void AddText(Text text)
         {
             this.Texts.Add(text);
-            _selectedIndex = this.Texts.Count - 1;
+            m_selectedIndex = this.Texts.Count - 1;
         }
 
         private void SelectText(int i)
         {
-            _selectedIndex = i;
+            m_selectedIndex = i;
         }
 
         private void ImportText()
@@ -272,7 +285,7 @@ namespace LMeter.Config
                 DrawHelpers.DrawNotification("Failed to Import Element!", NotificationType.Error);
             }
 
-            _textInput = string.Empty;
+            m_textInput = string.Empty;
         }
 
         private void ExportText(Text text)
@@ -303,7 +316,7 @@ namespace LMeter.Config
             }
 
             this.Texts.RemoveAt(index);
-            _selectedIndex = Math.Clamp(_selectedIndex, 0, Math.Max(this.Texts.Count - 1, 0));
+            m_selectedIndex = Math.Clamp(m_selectedIndex, 0, Math.Max(this.Texts.Count - 1, 0));
         }
     }
 

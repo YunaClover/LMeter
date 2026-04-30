@@ -16,17 +16,18 @@ namespace LMeter
 {
     public class PluginManager : IPluginDisposable
     {
-        private readonly Vector2 _configSize = new(650, 750);
+        private readonly Vector2 m_configSize = new(650, 750);
+        private readonly IClientState m_clientState;
+        private readonly IDalamudPluginInterface m_pluginInterface;
+        private readonly ICommandManager m_commandManager;
+        private readonly WindowSystem m_windowSystem;
+        private readonly ConfigWindow m_configRoot;
+        private readonly LMeterConfig m_config;
+        private DateTime? m_lastCombatTime { get; set; }
+        private DateTime? m_lastConnectionAttempt { get; set; }
+        private Vector2 m_origin;
 
-        private readonly IClientState _clientState;
-        private readonly IDalamudPluginInterface _pluginInterface;
-        private readonly ICommandManager _commandManager;
-        private readonly WindowSystem _windowSystem;
-        private readonly ConfigWindow _configRoot;
-        private readonly LMeterConfig _config;
-        private Vector2 _origin;
-
-        private readonly ImGuiWindowFlags _mainWindowFlags =
+        private readonly ImGuiWindowFlags m_mainWindowFlags =
             ImGuiWindowFlags.NoTitleBar
             | ImGuiWindowFlags.NoScrollbar
             | ImGuiWindowFlags.AlwaysAutoResize
@@ -43,17 +44,17 @@ namespace LMeter
             LMeterConfig config
         )
         {
-            _clientState = clientState;
-            _commandManager = commandManager;
-            _pluginInterface = pluginInterface;
-            _config = config;
+            m_clientState = clientState;
+            m_commandManager = commandManager;
+            m_pluginInterface = pluginInterface;
+            m_config = config;
 
-            _origin = ImGui.GetMainViewport().Size / 2f;
-            _configRoot = new ConfigWindow("LMeter_ConfigRoot", _configSize);
-            _windowSystem = new WindowSystem("LMeter");
-            _windowSystem.AddWindow(_configRoot);
+            m_origin = ImGui.GetMainViewport().Size / 2f;
+            m_configRoot = new ConfigWindow("LMeter_ConfigRoot", m_configSize);
+            m_windowSystem = new WindowSystem("LMeter");
+            m_windowSystem.AddWindow(m_configRoot);
 
-            _commandManager.AddHandler(
+            m_commandManager.AddHandler(
                 "/lm",
                 new CommandInfo(PluginCommand)
                 {
@@ -67,9 +68,9 @@ namespace LMeter
                 }
             );
 
-            _clientState.Logout += OnLogout;
-            _pluginInterface.UiBuilder.OpenConfigUi += OpenConfigUi;
-            _pluginInterface.UiBuilder.Draw += Draw;
+            m_clientState.Logout += OnLogout;
+            m_pluginInterface.UiBuilder.OpenConfigUi += OpenConfigUi;
+            m_pluginInterface.UiBuilder.Draw += Draw;
         }
 
         private void Draw()
@@ -79,21 +80,21 @@ namespace LMeter
                 return;
             }
 
-            _origin = ImGui.GetMainViewport().Size / 2f;
-            _windowSystem.Draw();
-            _config.ActConfig.TryReconnect();
-            _config.ActConfig.TryEndEncounter();
+            m_origin = ImGui.GetMainViewport().Size / 2f;
+            m_windowSystem.Draw();
+            this.TryConnect();
+            this.TryEndEncounter();
 
             ImGuiHelpers.ForceNextWindowMainViewport();
             ImGui.SetNextWindowPos(Vector2.Zero);
             ImGui.SetNextWindowSize(ImGui.GetMainViewport().Size);
-            if (ImGui.Begin("LMeter_Root", _mainWindowFlags))
+            if (ImGui.Begin("LMeter_Root", m_mainWindowFlags))
             {
                 CharacterState.UpdateCurrentCharacter();
                 Singletons.Get<ClipRectsHelper>().Update();
-                foreach (MeterWindow meter in _config.MeterList.Meters)
+                foreach (MeterWindow meter in m_config.MeterList.Meters)
                 {
-                    meter.Draw(_origin);
+                    meter.Draw(m_origin);
                 }
             }
 
@@ -103,7 +104,7 @@ namespace LMeter
         public void Clear()
         {
             Singletons.Get<LogClient>().Clear();
-            foreach (MeterWindow meter in _config.MeterList.Meters)
+            foreach (MeterWindow meter in m_config.MeterList.Meters)
             {
                 meter.Clear();
             }
@@ -121,22 +122,63 @@ namespace LMeter
 
             LogClient newClient = clientType switch
             {
-                1 => new IpcClient(_config.ActConfig),
-                _ => new WebSocketClient(_config.ActConfig),
+                1 => new IpcClient(m_config.ActConfig),
+                _ => new WebSocketClient(m_config.ActConfig),
             };
 
             newClient.Start();
             Singletons.Update(newClient);
         }
 
+        public void TryConnect()
+        {
+            ConnectionStatus status = Singletons.Get<LogClient>().Status;
+            if (status == ConnectionStatus.NotConnected || status == ConnectionStatus.ConnectionFailed)
+            {
+                if (!m_lastConnectionAttempt.HasValue)
+                {
+                    m_lastConnectionAttempt = DateTime.UtcNow;
+                    Singletons.Get<LogClient>().Start();
+                }
+                else if (
+                    m_config.ActConfig.AutoReconnect
+                    && m_lastConnectionAttempt
+                        < DateTime.UtcNow - TimeSpan.FromSeconds(m_config.ActConfig.ReconnectDelay)
+                )
+                {
+                    m_lastConnectionAttempt = DateTime.UtcNow;
+                    Singletons.Get<LogClient>().Reset();
+                }
+            }
+        }
+
+        public void TryEndEncounter()
+        {
+            if (Singletons.Get<LogClient>().Status == ConnectionStatus.Connected)
+            {
+                if (m_config.ActConfig.AutoEnd && CharacterState.IsInCombat())
+                {
+                    m_lastCombatTime = DateTime.UtcNow;
+                }
+                else if (
+                    m_lastCombatTime is not null
+                    && m_lastCombatTime < DateTime.UtcNow - TimeSpan.FromSeconds(m_config.ActConfig.AutoEndDelay)
+                )
+                {
+                    Singletons.Get<LogClient>().EndEncounter();
+                    m_lastCombatTime = null;
+                }
+            }
+        }
+
         public void Edit(IConfigurable configItem)
         {
-            _configRoot.PushConfig(configItem);
+            m_configRoot.PushConfig(configItem);
         }
 
         public void ConfigureMeter(MeterWindow meter)
         {
-            if (!_configRoot.IsOpen)
+            if (!m_configRoot.IsOpen)
             {
                 this.OpenConfigUi();
                 this.Edit(meter);
@@ -145,9 +187,9 @@ namespace LMeter
 
         private void OpenConfigUi()
         {
-            if (!_configRoot.IsOpen)
+            if (!m_configRoot.IsOpen)
             {
-                _configRoot.PushConfig(_config);
+                m_configRoot.PushConfig(m_config);
             }
         }
 
@@ -168,10 +210,10 @@ namespace LMeter
                     this.Clear();
                     break;
                 case { } args when args[0].Equals("toggle"):
-                    _config.MeterList.ToggleMeter(args.Length > 1 ? GetIntArg(args[1]) - 1 : null);
+                    m_config.MeterList.ToggleMeter(args.Length > 1 ? GetIntArg(args[1]) - 1 : null);
                     break;
                 case { } args when args[0].Equals("ct"):
-                    _config.MeterList.ToggleClickThrough(args.Length > 1 ? GetIntArg(args[1]) - 1 : null);
+                    m_config.MeterList.ToggleClickThrough(args.Length > 1 ? GetIntArg(args[1]) - 1 : null);
                     break;
                 default:
                     this.ToggleWindow();
@@ -186,13 +228,13 @@ namespace LMeter
 
         private void ToggleWindow()
         {
-            if (_configRoot.IsOpen)
+            if (m_configRoot.IsOpen)
             {
-                _configRoot.IsOpen = false;
+                m_configRoot.IsOpen = false;
             }
             else
             {
-                _configRoot.PushConfig(_config);
+                m_configRoot.PushConfig(m_config);
             }
         }
 
@@ -207,11 +249,11 @@ namespace LMeter
             if (disposing)
             {
                 // Don't modify order
-                _pluginInterface.UiBuilder.Draw -= Draw;
-                _pluginInterface.UiBuilder.OpenConfigUi -= OpenConfigUi;
-                _clientState.Logout -= OnLogout;
-                _commandManager.RemoveHandler("/lm");
-                _windowSystem.RemoveAllWindows();
+                m_pluginInterface.UiBuilder.Draw -= Draw;
+                m_pluginInterface.UiBuilder.OpenConfigUi -= OpenConfigUi;
+                m_clientState.Logout -= OnLogout;
+                m_commandManager.RemoveHandler("/lm");
+                m_windowSystem.RemoveAllWindows();
             }
         }
     }
