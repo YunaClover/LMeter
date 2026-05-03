@@ -2,11 +2,12 @@
   {
     "Author": "Lichie",
     "Name": "LMeter",
+    "Punchline": "游戏内ACT伤害显示",
     "Description": "FF14 ACT伤害显示插件",
     "InternalName": "LMeter",
     "AssemblyVersion": "0.4.4.5",
     "TestingAssemblyVersion": "0.4.4.5",
-    "RepoUrl": "https://github.com/YunaClover/LMeterCN",
+    "RepoUrl": "https://github.com/YunaClover/LMeter",
     "ApplicableVersion": "any",
     "DalamudApiLevel": 15,
     "IsHide": "False",
