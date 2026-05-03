@@ -1,8 +1,8 @@
 {
   "Name": "LMeter",
   "Author": "Lichie",
-  "Punchline": "Plugin to display ACT combat log data.",
-  "Description": "Renders ACT combat log data as a plugin instead of using a web based overlay",
+  "Punchline": "游戏内ACT伤害显示",
+  "Description": "将ACT战斗日志数据渲染为插件，而不是使用基于网页的覆盖层",
   "RepoUrl": "https://github.com/YunaClover/LMeter",
   "Tags": [ "UI" ]
 }
